@@ -12,6 +12,8 @@ namespace BabaooTest
         [SerializeField]
         private TMP_Text TMtext;
 
+        private bool isOver = false;
+
         public void BeginTimer()
         {
             StartCoroutine(TimerCoroutine());
@@ -24,6 +26,10 @@ namespace BabaooTest
             {
                 Timeleft--;
                 this.TMtext.text = $"{preText} {Timeleft.ToString()} s";
+                if (Timeleft <= 0)
+                {
+                    isOver = true;
+                }
                 yield return new WaitForSeconds(1f);
             }
         }
@@ -31,6 +37,11 @@ namespace BabaooTest
         public void Stop()
         {
             StopAllCoroutines();
+        }
+
+        public bool IsOver()
+        {
+            return isOver;
         }
 
     }

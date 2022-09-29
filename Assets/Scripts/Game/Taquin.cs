@@ -207,7 +207,12 @@ namespace BabaooTest
             if (hasBegun && HasEnded())
             {
                 timer.Stop();
-                bestScore = timer.Timeleft;
+                int best = PlayerPrefs.GetInt("Score", 0);
+                if (bestScore > best)
+                {
+                    bestScore = timer.Timeleft;
+                    PlayerPrefs.SetInt("Score", bestScore);
+                }
 
                 WinText.SetActive(true);
             }
@@ -218,9 +223,13 @@ namespace BabaooTest
         /// </summary>
         /// <param name="t1"></param>
         /// <param name="t2"></param>
+        //TODO: Refacto swaps
         public void Swap(Tile t1, Tile t2)
         {
-            //TODO: C'est moche i know
+            if (timer.IsOver())
+            {
+                return;
+            }
 
             hasBegun = true;
             int i = System.Array.IndexOf(Tiles, t1);
